@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskMaster Pro | Elegant Task Management</title>
+    <link rel="stylesheet" href="to-do-list.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-content">
+            <div class="logo-container">
+                <i class="fas fa-check-circle logo-icon"></i>
+                <div class="logo-text">
+                    <h1 class="site-title">TaskMaster</h1>
+                    <p class="site-tagline">Elegantly Organize Your Day</p>
+                </div>
+            </div>
+            <nav class="header-nav">
+                <button class="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+    <div class="container">
+        <div class="todo-app">
+            <h2 class="app-title">My Tasks <i class="fas fa-tasks"></i></h2>
+            <div class="input-section">
+                <input type="text" id="taskInput" placeholder="Add your task...">
+                <button id="addTask" class="add-btn">Add Task</button>
+            </div>
+            <ul id="taskList" class="task-list">
+                <!-- Tasks will be added here dynamically -->
+            </ul>
+            <div class="filters">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="active">Active</button>
+                <button class="filter-btn" data-filter="completed">Completed</button>
+            </div>
+        </div>
+    </div>
+    <script src="to-do-list.js"></script>
+</body>
+</html>

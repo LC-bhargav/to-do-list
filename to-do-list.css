@@ -1,0 +1,819 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    font-family: 'Playfair Display', 'Segoe UI', serif;
+}
+
+/* Update color variables and theme */
+:root {
+    --eclipse-dark: #0a0d1c;
+    --eclipse-light: #2a2f4c;
+    --corona-glow: #ff6b3d;
+    --corona-outer: #ff8f6b;
+    --moon-glow: #e2e6ff;
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.7);
+}
+
+/* Header Styles */
+.main-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(10, 13, 28, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 107, 61, 0.2);
+    z-index: 1000;
+    padding: 15px 0;
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo-icon {
+    font-size: 2.5em;
+    color: var(--corona-glow);
+    filter: drop-shadow(0 0 10px rgba(255, 107, 61, 0.4));
+}
+
+.logo-text {
+    line-height: 1.2;
+}
+
+.site-title {
+    font-size: 1.8em;
+    color: #fff;
+    margin: 0;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.site-tagline {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9em;
+    font-style: italic;
+    margin: 0;
+}
+
+.header-nav {
+    display: flex;
+    align-items: center;
+}
+
+.theme-toggle {
+    background: transparent;
+    border: 1px solid var(--corona-glow);
+    color: var(--corona-glow);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+    background: rgba(255, 107, 61, 0.1);
+    transform: translateY(-2px);
+}
+
+body {
+    background: linear-gradient(135deg, var(--eclipse-dark), var(--eclipse-light), #1a1f35);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 80px;
+}
+
+@keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+body::before {
+    display: none;
+}
+
+.container {
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
+    perspective: 1000px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+.todo-app {
+    background: rgba(10, 13, 28, 0.8);
+    -webkit-backdrop-filter: blur(25px);
+    backdrop-filter: blur(25px);
+    -moz-backdrop-filter: blur(25px);
+    -o-backdrop-filter: blur(25px);
+    padding: 40px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 107, 61, 0.1);
+    transform-style: preserve-3d;
+    transition: transform 0.3s ease;
+    animation: shadowPulse 4s infinite ease-in-out;
+    box-shadow: 0 10px 30px rgba(255, 107, 61, 0.1),
+                inset 0 0 30px rgba(255, 107, 61, 0.05);
+}
+
+.app-title {
+    color: #fff;
+    margin-bottom: 35px;
+    text-align: center;
+    font-size: 2em;
+    font-weight: 400;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.app-title i {
+    color: var(--corona-glow);
+    margin-left: 15px;
+    font-size: 0.8em;
+    opacity: 0.9;
+}
+
+.input-section {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+input {
+    flex: 1;
+    padding: 15px 20px;
+    border: 1px solid rgba(255, 107, 61, 0.2);
+    border-radius: 8px;
+    background: rgba(42, 47, 76, 0.3);
+    color: #fff;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+input:focus {
+    background: rgba(42, 47, 76, 0.3);
+    outline: none;
+    border-color: var(--corona-glow);
+    box-shadow: 0 0 15px rgba(255, 107, 61, 0.2);
+}
+
+input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+    font-style: italic;
+}
+
+.add-btn {
+    padding: 15px 30px;
+    background: linear-gradient(135deg, var(--corona-glow), var(--corona-outer));
+    border: none;
+    border-radius: 8px;
+    color: var(--eclipse-dark);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    box-shadow: 0 0 15px rgba(255, 107, 61, 0.3);
+}
+
+.add-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px rgba(255, 107, 61, 0.5);
+}
+
+.task-list {
+    list-style: none;
+    margin-bottom: 30px;
+}
+
+.task-item {
+    background: rgba(42, 47, 76, 0.3);
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid rgba(255, 107, 61, 0.1);
+    transition: all 0.3s ease;
+    gap: 6px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.task-item:hover {
+    background: rgba(42, 47, 76, 0.3);
+    transform: translateY(-2px);
+}
+
+.task-item.completed {
+    background: rgba(255, 107, 61, 0.1);
+    border-color: rgba(255, 107, 61, 0.2);
+}
+
+.task-item span {
+    color: #fff;
+    flex: 1;
+    margin: 0 6px;
+    font-size: 1em;
+    letter-spacing: 0.5px;
+}
+
+.task-item.completed span {
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+.delete-btn {
+    background: transparent;
+    color: var(--corona-glow);
+    border: 1px solid rgba(255, 107, 61, 0.3);
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9em;
+}
+
+.delete-btn:hover {
+    background: rgba(255, 107, 61, 0.1);
+    color: var(--corona-glow);
+    border-color: var(--corona-glow);
+}
+
+.filters {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.filter-btn {
+    padding: 10px 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9em;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.filter-btn:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+}
+
+.filter-btn.active {
+    background: rgba(255, 107, 61, 0.2);
+    border-color: var(--corona-glow);
+    color: var(--corona-glow);
+}
+
+.checkbox {
+    width: 10px;
+    height: 10px;
+    cursor: pointer;
+    appearance: none;
+    border: 1px solid var(--corona-glow);
+    border-radius: 1px;
+    position: relative;
+    transition: all 0.3s ease;
+    background: transparent;
+    flex-shrink: 0;
+    margin: 0 2px;
+}
+
+.checkbox:checked {
+    background: var(--corona-glow);
+    border-color: var(--corona-glow);
+    box-shadow: 0 0 10px rgba(255, 107, 61, 0.5);
+}
+
+.checkbox:checked::after {
+    content: '✓';
+    position: absolute;
+    color: #1a1f35;
+    font-size: 7px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: bold;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.task-item {
+    animation: fadeIn 0.4s ease-out forwards;
+}
+
+/* Add elegant scrollbar styles */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 107, 61, 0.3);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 107, 61, 0.5);
+}
+
+/* Keep the subtle hover effect */
+.todo-app:hover {
+    transform: translateY(-5px);
+}
+
+/* Keep the shadow pulse animation */
+@keyframes shadowPulse {
+    0%, 100% {
+        box-shadow: 0 10px 30px rgba(255, 107, 61, 0.1),
+                    inset 0 0 30px rgba(255, 107, 61, 0.05);
+    }
+    50% {
+        box-shadow: 0 15px 40px rgba(255, 107, 61, 0.2),
+                    inset 0 0 40px rgba(255, 107, 61, 0.1);
+    }
+}
+
+/* Media queries for different screen sizes */
+@media screen and (max-width: 640px) {
+    .container {
+        padding: 15px;
+    }
+
+    .todo-app {
+        padding: 25px 20px;
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+
+    .input-section {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .add-btn {
+        width: 100%;
+        padding: 12px;
+    }
+
+    .filters {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .filter-btn {
+        flex: 1;
+        min-width: 80px;
+        padding: 8px 12px;
+        font-size: 0.8em;
+    }
+}
+
+/* Small mobile devices */
+@media screen and (max-width: 380px) {
+    .todo-app {
+        padding: 20px 15px;
+    }
+
+    h1 {
+        font-size: 1.8em;
+    }
+
+    input {
+        padding: 12px 15px;
+    }
+
+    .task-item {
+        padding: 10px;
+    }
+
+    .task-item span {
+        font-size: 0.9em;
+    }
+}
+
+/* Tablet optimization */
+@media screen and (min-width: 641px) and (max-width: 1024px) {
+    .container {
+        max-width: 80%;
+    }
+}
+
+/* High-DPI screens */
+@media screen and (-webkit-min-device-pixel-ratio: 2),
+       screen and (min-resolution: 192dpi) {
+    .todo-app {
+        backdrop-filter: blur(30px);
+        -webkit-backdrop-filter: blur(30px);
+    }
+}
+
+/* Touch device optimizations */
+@media (hover: none) {
+    .todo-app:hover {
+        transform: none;
+    }
+
+    .add-btn:hover {
+        transform: none;
+        box-shadow: none;
+    }
+
+    .task-item:hover {
+        transform: none;
+    }
+
+    /* Larger touch targets for mobile */
+    .checkbox {
+        width: 14px;
+        height: 14px;
+    }
+
+    .checkbox:checked::after {
+        font-size: 9px;
+    }
+
+    .delete-btn {
+        padding: 8px 12px;
+    }
+}
+
+/* Cross-browser compatibility */
+.todo-app {
+    background: rgba(10, 13, 28, 0.8);
+    -webkit-backdrop-filter: blur(25px);
+    backdrop-filter: blur(25px);
+    -moz-backdrop-filter: blur(25px);
+    -o-backdrop-filter: blur(25px);
+}
+
+/* Fallback for browsers that don't support backdrop-filter */
+@supports not ((backdrop-filter: blur(25px)) or (-webkit-backdrop-filter: blur(25px))) {
+    .todo-app {
+        background: rgba(10, 13, 28, 0.95);
+    }
+}
+
+/* Improved input accessibility */
+input:focus {
+    outline: 2px solid rgba(201, 164, 92, 0.5);
+    outline-offset: -2px;
+}
+
+/* Better button accessibility */
+.add-btn,
+.delete-btn,
+.filter-btn {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+/* Ensure proper rendering on iOS */
+input,
+button {
+    -webkit-appearance: none;
+    border-radius: 8px;
+}
+
+/* Prevent text size adjustment on orientation change */
+html {
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+}
+
+/* Smooth scrolling for the whole page */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Optimize animations for reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* Print styles */
+@media print {
+    body {
+        background: none;
+    }
+
+    .todo-app {
+        box-shadow: none;
+        border: 1px solid #000;
+    }
+
+    .add-btn,
+    .delete-btn,
+    .filters {
+        display: none;
+    }
+
+    .task-item {
+        break-inside: avoid;
+    }
+}
+
+/* Add responsive styles for header */
+@media screen and (max-width: 640px) {
+    .main-header {
+        padding: 10px 0;
+    }
+
+    .logo-icon {
+        font-size: 2em;
+    }
+
+    .site-title {
+        font-size: 1.5em;
+    }
+
+    .site-tagline {
+        font-size: 0.8em;
+    }
+
+    body {
+        padding-top: 70px;
+    }
+}
+
+@media screen and (max-width: 380px) {
+    .site-tagline {
+        display: none;
+    }
+
+    .logo-icon {
+        font-size: 1.8em;
+    }
+
+    .site-title {
+        font-size: 1.3em;
+    }
+}
+
+/* Add these new animations and effects */
+
+/* Smooth page load animation */
+.todo-app {
+    animation: fadeInScale 0.6s ease-out forwards;
+}
+
+@keyframes fadeInScale {
+    0% {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Smooth task animations */
+.task-item {
+    animation: slideIn 0.4s ease-out forwards;
+    transform-origin: top;
+}
+
+@keyframes slideIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Delete animation */
+.task-item.deleting {
+    animation: slideOut 0.3s ease-in forwards;
+}
+
+@keyframes slideOut {
+    0% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(100px);
+    }
+}
+
+/* Checkbox animation */
+.checkbox {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.checkbox:checked {
+    animation: checkmark 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes checkmark {
+    0% {
+        transform: scale(0.8);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Button hover effects */
+.add-btn, .delete-btn, .filter-btn {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.add-btn::after, .delete-btn::after, .filter-btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease, height 0.6s ease;
+}
+
+.add-btn:hover::after, .delete-btn:hover::after, .filter-btn:hover::after {
+    width: 300px;
+    height: 300px;
+}
+
+/* Header animations */
+.logo-icon {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        filter: drop-shadow(0 0 8px rgba(255, 107, 61, 0.3));
+    }
+    50% {
+        filter: drop-shadow(0 0 15px rgba(255, 107, 61, 0.6));
+    }
+    100% {
+        filter: drop-shadow(0 0 8px rgba(255, 107, 61, 0.3));
+    }
+}
+
+/* Input focus effect */
+input {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+input:focus {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(201, 164, 92, 0.2);
+}
+
+/* Task completion animation */
+.task-item.completed {
+    animation: completeTask 0.3s ease forwards;
+}
+
+@keyframes completeTask {
+    0% {
+        background: rgba(42, 47, 76, 0.3);
+    }
+    50% {
+        transform: scale(1.02);
+        box-shadow: 0 0 20px rgba(255, 107, 61, 0.3);
+    }
+    100% {
+        background: rgba(255, 107, 61, 0.1);
+        transform: scale(1);
+    }
+}
+
+/* Theme toggle button animation */
+.theme-toggle {
+    animation: rotateIcon 0.3s ease;
+}
+
+@keyframes rotateIcon {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Add this to the JavaScript file for delete animation */
+
+/* Add eclipse glow effect to the app container */
+.todo-app::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(
+        circle at center,
+        transparent 0%,
+        rgba(255, 107, 61, 0.1) 50%,
+        transparent 100%
+    );
+    pointer-events: none;
+    z-index: -1;
+    animation: eclipseGlow 8s infinite ease-in-out;
+}
+
+@keyframes eclipseGlow {
+    0%, 100% {
+        opacity: 0.5;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+        opacity: 0.8;
+        transform: translate(-50%, -50%) scale(1.1);
+    }
+}
+
+/* Add corona effect to the header */
+.site-title::after {
+    content: '';
+    position: absolute;
+    width: 120%;
+    height: 120%;
+    background: radial-gradient(
+        circle at center,
+        rgba(255, 107, 61, 0.2) 0%,
+        transparent 70%
+    );
+    z-index: -1;
+    animation: coronaEffect 4s infinite ease-in-out;
+}
+
+@keyframes coronaEffect {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.5;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.7;
+    }
+}
